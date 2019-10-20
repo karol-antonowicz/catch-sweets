@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+            color: white;
+        }
+        h1 {
+            text-align: center;
+        }
+        body {
+            background-color: black;
+        }
+        main {
+            width: 400px;
+            height: 400px;
+            border: 1px solid rgb(255, 0, 0);
+            position: relative;
+            margin: 0 auto;
+            background-color: white;
+        }
+        span {
+            display: block;
+            position: absolute;
+        }
+        .sweets{
+            background-image: url(./img/sweets.png);
+            background-size: cover;
+            width: 25px;
+            height: 25px;
+            left: 355px;
+            top: 355px;
+            z-index: 1;
+
+        }
+        .thieves {
+            background-image: url(./img/glasses.png);
+            background-size: cover;
+            width: 25px;
+            height: 25px;
+            z-index: 2;
+            left: 20px;
+            top: 20px;
+        }
+
+        /*
+        .lol {
+            width: 25px;
+            height: 25px;
+            background-color: red;
+            z-index: 2;
+            left: 160px;
+            top: 20px;
+
+        }
+        */
+        span.crashed,
+        .messages {
+            background: red;
+            z-index: 3;
+            color: white;
+            position: fixed;
+            top: 5%;
+            left: 50%;
+        }
+        p {
+            text-align: center;
+        }
+        button {
+            display: block;
+            margin: 0 auto;
+            background-color: red;
+            color: white;
+            font-size: 2rem;
+            letter-spacing: 1px;
+        }
+
+        .actual-points {
+            font-size: 3rem;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Catch dem sweets!</h1>
+    <p class="messages"></p>
+    <main>
+        <span class="sweets"></span>
+        <span class="thieves"></span>
+        <!-- <span class="lol"></span> -->
+    </main>
+    <p>Zasady gry: Steruj podejrzanym typem używając klawiszy WSAD,<br> tak aby złapać cukierki.<br>Nie możesz dotknąć granicy pola gry!</p>
+    <button id="reset">Zacznij od początku</button>
+    <p class="actual-points">0/3</p>
+
+    <script>
+            //declarin variables
+        let box = document.querySelector('main'),       // grabs the main tag
+            car1 = document.querySelector('.sweets'),   // grbas the sweets
+            car2 = document.querySelector('.thieves'),  // grabs the shades emoji
+            /*car3 = document.querySelector('.lol') */       // grabs the other object
+            msgBox = document.querySelector('.messages'); // grabs the messages
+            playAgainButton = document.querySelector('button') // grabs the playagai nbutton
+            actualPoints = document.querySelector('.actual-points') // grabs the paraagraphf with points
+       
+            //function for moving the car1
+
+        /* function move1() {
+            if (event.key === 'ArrowDown'){
+                car3.style.top = car3.offsetTop  + 10 + "px" 
+            }
+            else if (event.key === 'ArrowUp'){
+                car3.style.top = car3.offsetTop - 10 + "px" 
+            }
+            else if (event.key === 'ArrowLeft'){
+                car3.style.left = car3.offsetLeft - 10 + "px" 
+            }
+            else if (event.key === 'ArrowRight'){
+                car3.style.left = car3.offsetLeft + 10 + "px" 
+            }
+
+            // if you try to go outside the box
+            // if you try to go outside the box
+            if (car3.offsetTop < 0 ) { 
+              car3.style.top = "0px"        // blocks going up
+                   
+            }
+            if (car3.offsetTop > box.offsetHeight - car3.offsetWidth ) { 
+              car3.style.top = box.offsetHeight.toString() - car3.offsetWidth.toString() + "px"        // blocks going down
+                                
+            }
+            if (car3.offsetLeft < 0 ) { 
+              car3.style.left = "0px"        // blocks going left 
+                   
+            }
+            if (car3.offsetLeft > box.offsetWidth - car3.offsetWidth ) { 
+              car3.style.left = box.offsetWidth.toString() - car3.offsetWidth.toString() + "px"       // blocks going right
+                                
+            }
+            checkCollision()
+            
+        } */
+
+
+
+
+            // this function spawns the blue square in the box on random positions
+        let bean = setInterval(function haha() {
+            var a = Math.random()*374
+            car1.style.top = a + "px"
+            car1.style.left = a + "px"    
+        }, 1500)
+
+
+
+
+            // this checks if you finished the game already = collected 3 pointz
+        if (sessionStorage.getItem('punkty') === "3") {
+            car1.style.display = "none"
+            car2.style.display = "none"
+        } else {
+            car1.style.display = "initial"
+            car2.style.display = "initial"
+        }
+
+
+            // this function is for moving your square block
+        function move2() {
+           
+            if (event.key === 's'){
+                car2.style.top = car2.offsetTop + 10 + "px" 
+            }
+            else if (event.key === 'w'){
+                car2.style.top = car2.offsetTop - 10 + "px" 
+            }
+            else if (event.key === 'a'){
+                car2.style.left = car2.offsetLeft - 10 + "px" 
+            }
+            else if (event.key === 'd'){
+                car2.style.left = car2.offsetLeft + 10 + "px" 
+            }
+            // if you try to go outside the box
+            if (car2.offsetTop < 0 ) { 
+              car2.style.top = "0px"        // blocks going up
+                   
+            }
+            if (car2.offsetTop > box.offsetHeight - car2.offsetWidth ) { 
+              car2.style.top = box.offsetHeight.toString() - car2.offsetWidth.toString() + "px"        // blocks going down
+                                
+            }
+            if (car2.offsetLeft < 0 ) { 
+              car2.style.left = "0px"        // blocks going left 
+                   
+            }
+            if (car2.offsetLeft > box.offsetWidth - car2.offsetWidth ) { 
+              car2.style.left = box.offsetWidth.toString() - car2.offsetWidth.toString() + "px"       // blocks going right
+                                
+            }
+            
+            //checks for collisions or goiing out of box
+            checkCollision()
+            checkBorders(car2)
+        }
+
+
+        // collision?????
+
+
+         function checkCollision() {
+            if (car1.offsetTop < car2.offsetTop + car2.offsetWidth &&
+                car1.offsetTop + car1.offsetWidth > car2.offsetTop &&
+                car1.offsetLeft < car2.offsetLeft + car2.offsetHeight &&
+                car1.offsetLeft + car1.offsetHeight > car2.offsetLeft) {
+                gameWin('collision')
+            } 
+        } 
+
+        //  when ur car goes outta box
+
+        function checkBorders(car) {
+            if (car.offsetTop == 0 ||
+                car.offsetTop + car.offsetWidth == box.offsetHeight ||
+                car.offsetLeft == 0 ||
+                car.offsetLeft + car.offsetWidth == box.offsetWidth
+                ) {
+                gameOver()
+            }
+        }
+
+        // when u get points/?
+
+        function gameWin(p) {
+            if (p === 'collision' && sessionStorage.getItem('punkty') === null) {
+                msg = 'Zdobywasz punkt 1!';
+                sessionStorage.setItem('punkty', '1')
+                msgBox.innerText = msg;
+                car1.style.top = "360px"
+                car2.style.top = "20px"
+                actualPoints.innerText = sessionStorage.getItem('punkty') + "/3"
+            } else if (p === 'collision' && sessionStorage.getItem('punkty') === "1") {
+            msg = 'Zdobywasz punkt 2!';
+                sessionStorage.setItem('punkty', '2')
+                msgBox.innerText = msg;
+                car1.style.top = "360px"
+                car2.style.top = "20px"
+                actualPoints.innerText = sessionStorage.getItem('punkty') + "/3"
+            }
+            else if (p === 'collision' && sessionStorage.getItem('punkty') === "2") {
+            msg = 'Zdobywasz punkt 3 i wgrywasz grę! - Gratlujacje!';
+            /* car1.style.display = "none"
+            car2.style.display = "none" */
+                box.style.backgroundImage = "url(./img/sweets.png)"
+                car2.style.backgroundImage = "url(./img/happy.png)"
+                sessionStorage.setItem('punkty', '3')
+                msgBox.innerText = msg;
+                actualPoints.innerText = sessionStorage.getItem('punkty') + "/3"
+               
+            } 
+        }
+    
+        
+        // when is game over?
+         function gameOver() {
+             if (sessionStorage.getItem('punkty') === "3") {
+                 
+             } else {
+           box.style.backgroundColor = "red"
+           car2.remove();
+           
+           msg = 'Przegrałeś, ale możesz zagrać ponownie';
+           msgBox.innerText = msg;
+             }
+            
+
+        } 
+
+       
+        // play again - clears seession storage 
+        function playAgain() {
+        sessionStorage.clear() // usuwa rzeczy zapisane w sessionStorage
+        box.style.background = "white"
+        car2.style.backgroundImage = "url(./img/glasses.png)"
+        msgBox.innerText = ""
+        car1.style.display = "initial"
+        car2.style.display = "initial"
+        car1.style.top = "360px"
+        car1.style.left = "360px"
+        car2.style.top = "20px"
+        car2.style.left = "20px"
+        actualPoints.innerText = "0/3"
+        box.style.backgroundColor = "white"
+        box.appendChild(car2)
+         }
+
+         // EVENT LISTENERS !! //
+        document.addEventListener('keydown',checkBorders(car1))
+        document.addEventListener('keydown',move2)
+        /* document.addEventListener('keydown',move1) */
+        playAgainButton.addEventListener('click', playAgain)
+        
+
+         // kant //
+
+
+   </script>
+</body>
+
+</html>
